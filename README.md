@@ -127,7 +127,7 @@ Two experiments were conducted, each using the `bert-based-multilingual-cased` m
 python3 main.py --filter-language english --model-name bert-based-multilingual-cased
 ```
 
-| Category            | F1                   | Precision            | Recall               | Num samples   |
+| Category            | F1                   | Precision            | Recall               | Number   |
 |------------------|-------------------|-------------------|-------------------|----------|
 | ANIM           | 0.753   | 0.699   | 0.815   | 1852     |
 | BIO            | 0.667   | 0.6     | 0.75    | 16       |
@@ -144,7 +144,7 @@ python3 main.py --filter-language english --model-name bert-based-multilingual-c
 | PLANT          | 0.982   | 0.975   | 0.989   | 544      |
 | TIME           | 0.596   | 0.627   | 0.568   | 366      |
 | VEHI           | 0.966   | 0.958   | 0.974   | 704      |
-| overall        | 0.989   | 0.990   | 0.989   | -        |
+| All            | 0.989   | 0.990   | 0.989   | 656336   |
 
 ## System B
 ```bash

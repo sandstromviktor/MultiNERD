@@ -35,6 +35,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=32, help="Batch size for training.")
     parser.add_argument("--epochs", type=int, default=1, help="Number of training epochs.")
     parser.add_argument("--model-name", type=str, default="prajjwal1/bert-tiny", help="Specify which model to fine-tune")
+    parser.add_argument("--gpu", action="store_true", help="Enable GPU usage.")
     
     # Data specific arguments.
     group = parser.add_mutually_exclusive_group(required=True)

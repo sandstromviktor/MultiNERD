@@ -41,7 +41,7 @@ def get_training_args(args: ArgumentParser) -> TrainingArguments:
 
     # Prepare the 🤗 transformers training arguments
     train_args = TrainingArguments(
-        output_dir="models/span_marker_mbert_base_multinerd",
+        output_dir=f"models/{args.model_name}",
         # Training Hyperparameters:
         learning_rate=args.learning_rate,
         per_device_train_batch_size=args.batch_size,
@@ -53,10 +53,10 @@ def get_training_args(args: ArgumentParser) -> TrainingArguments:
         bf16=True,  # Replace `bf16` with `fp16` if your hardware can't use bf16.
         # Other Training parameters
         logging_first_step=True,
-        logging_steps=50,
+        logging_steps=500,
         evaluation_strategy="steps",
         save_strategy="steps",
-        eval_steps=1000,
+        eval_steps=5000,
         save_total_limit=2,
         dataloader_num_workers=4,
     )
@@ -68,6 +68,9 @@ def train(args):
     
     model = get_model(args.model_name, args.categories)
     train_args = get_training_args(args)
+    
+    if args.gpu:
+        model = model.to("cuda")
     
     if args.categories:
         dataset = get_category_filtered_dataset(args.categories)

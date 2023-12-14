@@ -3,7 +3,7 @@ import logging
 from argparse import ArgumentParser
 from datasets import load_dataset
 from transformers import TrainingArguments
-
+from sklearn.metrics import precision_recall_fscore_support
 from span_marker import SpanMarkerModel, Trainer
 
 from data_utils.preprocess_data import (
@@ -64,11 +64,27 @@ def get_training_args(args: ArgumentParser) -> TrainingArguments:
         logging_steps=500,
         evaluation_strategy="steps",
         save_strategy="steps",
-        eval_steps=5000,
+        eval_steps=1000,
         save_total_limit=2,
         dataloader_num_workers=4,
     )
     return train_args
+
+
+def compute_metrics(p):
+    predictions, labels = p.predictions, p.label_ids
+
+    # Choose the average strategy you want (micro or macro)
+    average_strategy = "weighted"  # or "macro"
+
+    # Calculate precision, recall, and f1 score
+    precision, recall, f1, _ = precision_recall_fscore_support(labels, predictions, average=average_strategy)
+
+    return {
+        f"{average_strategy}_precision": precision,
+        f"{average_strategy}_recall": recall,
+        f"{average_strategy}_f1": f1,
+    }
 
 
 def train(args):
@@ -89,13 +105,14 @@ def train(args):
         args=train_args,
         train_dataset=dataset["train"],
         eval_dataset=dataset["validation"],
+        compute_metrics=compute_metrics,
     )
 
     trainer.train()
 
     trainer.save_model(f"models/{args.model_name}/checkpoint-final")
 
-    test_dataset = load_dataset(dataset, split="test")
+    test_dataset = dataset["test"]
     # Compute & save the metrics on the test set
     metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
     trainer.save_metrics("test", metrics)

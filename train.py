@@ -1,10 +1,12 @@
 from typing import Type, Any
 import logging
 from argparse import ArgumentParser
-from datasets import load_dataset
+import numpy as np
+from datasets import load_dataset, load_metric
 from transformers import TrainingArguments
 from sklearn.metrics import precision_recall_fscore_support
 from span_marker import SpanMarkerModel, Trainer
+import evaluate
 
 from data_utils.preprocess_data import (
     get_filtered_tags,
@@ -38,7 +40,6 @@ def get_model(model_name: str, categories: list = None) -> SpanMarkerModel:
     model = SpanMarkerModel.from_pretrained(
         model_name,
         labels=labels,
-        # SpanMarker hyperparameters:
         model_max_length=256,
         marker_max_length=128,
         entity_max_length=10,
@@ -48,7 +49,7 @@ def get_model(model_name: str, categories: list = None) -> SpanMarkerModel:
 
 
 def get_training_args(args: ArgumentParser) -> TrainingArguments:
-    # Prepare the 🤗 transformers training arguments
+
     train_args = TrainingArguments(
         output_dir=f"models/{args.model_name}",
         # Training Hyperparameters:
@@ -58,10 +59,9 @@ def get_training_args(args: ArgumentParser) -> TrainingArguments:
         num_train_epochs=args.epochs,
         weight_decay=0.01,
         warmup_ratio=0.1,
-        bf16=True,  # Replace `bf16` with `fp16` if your hardware can't use bf16.
-        # Other Training parameters
+        bf16=True,
         logging_first_step=True,
-        logging_steps=500,
+        logging_steps=1000,
         evaluation_strategy="steps",
         save_strategy="steps",
         eval_steps=1000,
@@ -69,22 +69,6 @@ def get_training_args(args: ArgumentParser) -> TrainingArguments:
         dataloader_num_workers=4,
     )
     return train_args
-
-
-def compute_metrics(p):
-    predictions, labels = p.predictions, p.label_ids
-
-    # Choose the average strategy you want (micro or macro)
-    average_strategy = "weighted"  # or "macro"
-
-    # Calculate precision, recall, and f1 score
-    precision, recall, f1, _ = precision_recall_fscore_support(labels, predictions, average=average_strategy)
-
-    return {
-        f"{average_strategy}_precision": precision,
-        f"{average_strategy}_recall": recall,
-        f"{average_strategy}_f1": f1,
-    }
 
 
 def train(args):
@@ -105,7 +89,6 @@ def train(args):
         args=train_args,
         train_dataset=dataset["train"],
         eval_dataset=dataset["validation"],
-        compute_metrics=compute_metrics,
     )
 
     trainer.train()

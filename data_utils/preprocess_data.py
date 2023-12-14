@@ -81,7 +81,6 @@ def get_category_filtered_dataset(categories: list) -> DatasetDict:
 
     mapped_tags = set([TAG_MAP[tag] for tag in tags])
 
-    logging.info(f"TAGS {mapped_tags}")
     return dataset.map(
         preprocess_ner_tags,
         batched=True,

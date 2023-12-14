@@ -13,7 +13,7 @@ The goal is to develop two models that can identify and classify entities on
 
 ## How to use
 
-## Command-Line Arguments
+### Command-Line Arguments
 
 - `--learning-rate`
    - *Description:* Learning rate for the optimizer.

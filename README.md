@@ -1,6 +1,11 @@
 # MultiNERD Named Entity Recognition (NER) Project
 
-This repository contains code for training and evaluating a Named Entity Recognition (NER) model on the MultiNERD dataset. The goal is to develop a model that can identify and classify entities in English text into five categories: PERSON, ORGANIZATION, LOCATION, DISEASES, ANIMAL, and the O tag (not part of an entity).
+This repository contains code for training and evaluating a Named Entity Recognition (NER) model on the [MultiNERD dataset](https://huggingface.co/datasets/Babelscape/multinerd?row=17).
+
+The goal is to develop two models that can identify and classify entities on
+1. All 10 languages () and only 5 categories (Person, Organization, Location, Diseases and Anmial) 
+2. All 15 categories, but only using the English language
+
 
 ## How to use
 
@@ -65,7 +70,7 @@ NOTE: You can not use `--language-filter` together with `--categories`
 python main.py --learning-rate 1e-4 --batch-size 64 --epochs 5 --model-name "bert-base-uncased" --language-filter en
 ```
 
-## How to use
+## How to setup
 
 ### 1. Clone the Repository
 ```bash

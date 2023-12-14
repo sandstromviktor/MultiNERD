@@ -84,3 +84,10 @@ def train(args):
     )
 
     trainer.train()
+    
+    trainer.save_model(f"models/{args.model_name}/checkpoint-final")
+
+    test_dataset = load_dataset(dataset, split="test")
+    # Compute & save the metrics on the test set
+    metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
+    trainer.save_metrics("test", metrics)

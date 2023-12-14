@@ -1,5 +1,5 @@
 import pytest
-from preprocessing.test import preprocess_ner_tags
+from data_utils.preprocess_data import preprocess_ner_tags
 from datasets import load_dataset
 import os
 

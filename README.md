@@ -1,3 +1,7 @@
+<a href="[https://opensource.org/licenses/MIT](https://github.com/psf/black)">
+      <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+   </a>
+   
 # MultiNERD Named Entity Recognition (NER) Project
 
 This repository contains code for training and evaluating a Named Entity Recognition (NER) model on the [MultiNERD dataset](https://huggingface.co/datasets/Babelscape/multinerd?row=17).

@@ -36,20 +36,21 @@ TAG_MAP = {
     "I-TIME": 28,
     "B-VEHI": 29,
     "I-VEHI": 30,
-  }
+}
 
 LANGUAGE_MAP = {
-    'chinese': 'zh',
-    'dutch': 'nl',
-    'english': 'en',
-    'french': 'fr',
-    'german': 'de',
-    'italian': 'it',
-    'polish': 'pl',
-    'portuguese': 'pt',
-    'russian': 'ru',
-    'spanish': 'es'
+    "chinese": "zh",
+    "dutch": "nl",
+    "english": "en",
+    "french": "fr",
+    "german": "de",
+    "italian": "it",
+    "polish": "pl",
+    "portuguese": "pt",
+    "russian": "ru",
+    "spanish": "es",
 }
+
 
 def get_raw_dataset():
     cache_dir = os.path.join(os.getcwd(), "cache")
@@ -64,7 +65,9 @@ def get_single_languange_dataset(lang: str) -> DatasetDict:
     lang = lang.lower()
     lang = LANGUAGE_MAP.get(lang, lang)
     if lang not in LANGUAGE_MAP.values():
-            raise ValueError(f"Invalid language. Expected one of {LANGUAGE_MAP.values()}, but got '{lang}'.")
+        raise ValueError(
+            f"Invalid language. Expected one of {LANGUAGE_MAP.values()}, but got '{lang}'."
+        )
     logging.info(f"Filtering on language: {lang}")
     dataset = dataset.filter(lambda set: set["lang"] == lang)
     logging.info("Filtering COMPLETE")
@@ -77,43 +80,60 @@ def get_category_filtered_dataset(categories: list) -> DatasetDict:
     tags = get_filtered_tags(categories)
 
     mapped_tags = set([TAG_MAP[tag] for tag in tags])
-    
+
     logging.info(f"TAGS {mapped_tags}")
-    return dataset.map(preprocess_ner_tags,
-                       batched=True,
-                        num_proc=4,
-                        fn_kwargs={"mapped_tags": mapped_tags},
-                        )
+    return dataset.map(
+        preprocess_ner_tags,
+        batched=True,
+        num_proc=4,
+        fn_kwargs={"mapped_tags": mapped_tags},
+    )
 
 
 def preprocess_ner_tags(row: dict, mapped_tags: set) -> dict:
     ner_tags = row["ner_tags"]
-    
+
     # Check if ner_tags is a list of lists
     if all(isinstance(inner_list, list) for inner_list in ner_tags):
         try:
             # Convert all inner values to integers
             ner_tags = [[int(value) for value in inner_list] for inner_list in ner_tags]
         except (ValueError, TypeError):
-            raise ValueError("Invalid value found in ner_tags. All values must be convertible to int.")
-        
+            raise ValueError(
+                "Invalid value found in ner_tags. All values must be convertible to int."
+            )
+
         # Replace values not in mapped_tags with 0 for each inner list
-        row["ner_tags"] = [[0 if value not in mapped_tags else value for value in inner_list] for inner_list in ner_tags]
+        row["ner_tags"] = [
+            [0 if value not in mapped_tags else value for value in inner_list]
+            for inner_list in ner_tags
+        ]
     else:
         try:
             # Convert all values to integers
             ner_tags = [int(value) for value in ner_tags]
         except (ValueError, TypeError):
-            raise ValueError("Invalid value found in ner_tags. All values must be convertible to int.")
-        
+            raise ValueError(
+                "Invalid value found in ner_tags. All values must be convertible to int."
+            )
+
         # Replace values not in mapped_tags with 0 for the outer list
-        row["ner_tags"] = [0 if value not in mapped_tags else value for value in ner_tags]
+        row["ner_tags"] = [
+            0 if value not in mapped_tags else value for value in ner_tags
+        ]
 
     return row
 
 
 def get_filtered_tags(categories: list) -> set:
-    return set([key for key, value in TAG_MAP.items() if any(substring in key for substring in categories)])
+    return set(
+        [
+            key
+            for key, value in TAG_MAP.items()
+            if any(substring in key for substring in categories)
+        ]
+    )
+
 
 def get_all_tags() -> set:
     return set(TAG_MAP.keys())

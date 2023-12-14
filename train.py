@@ -1,12 +1,10 @@
 from typing import Type, Any
 import logging
 from argparse import ArgumentParser
-import numpy as np
-from datasets import load_dataset, load_metric
+from datasets import load_dataset
 from transformers import TrainingArguments
 from sklearn.metrics import precision_recall_fscore_support
 from span_marker import SpanMarkerModel, Trainer
-import evaluate
 
 from data_utils.preprocess_data import (
     get_filtered_tags,
@@ -49,7 +47,6 @@ def get_model(model_name: str, categories: list = None) -> SpanMarkerModel:
 
 
 def get_training_args(args: ArgumentParser) -> TrainingArguments:
-
     train_args = TrainingArguments(
         output_dir=f"models/{args.model_name}",
         # Training Hyperparameters:

@@ -32,7 +32,6 @@ def get_model(model_name: str, categories: list = None) -> SpanMarkerModel:
 
     if categories:
         labels = get_filtered_tags(categories)
-        logging.info(f"Setting labels as {labels}")
     else:
         labels = get_all_tags()
 
@@ -87,15 +86,15 @@ def train(args):
     trainer = Trainer(
         model=model,
         args=train_args,
-        train_dataset=dataset["train"].select(range(100)),
-        eval_dataset=dataset["validation"].select(range(100)),
+        train_dataset=dataset["train"],
+        eval_dataset=dataset["validation"],
     )
 
     trainer.train()
 
     trainer.save_model(f"models/{args.model_name}/checkpoint-final")
 
-    test_dataset = dataset["test"].select(range(100))
+    test_dataset = dataset["test"]
     # Compute & save the metrics on the test set
     metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
     trainer.save_metrics("test", metrics)

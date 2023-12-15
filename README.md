@@ -176,24 +176,10 @@ python3 main.py --categories PER ORG LOC DIS ANIM --model-name bert-base-multili
 
 ## Summary
 
-System A 
+System A achieved an overall F1 score of 0.940, excelling in categories like FOOD, PER, and INST, while facing challenges in BIO and TIME. The language filter (English subset) didn't impact performance negatively, suggesting adaptability across languages, likely due to the pre-training on multiple languages.
 
-- Overall Performance: The model achieved an overall F1 score of 0.940 on the test dataset.
-- Category-wise Analysis:
-    - High Performers: The model excelled in categories such as FOOD (F1: 0.949), PER (F1: 0.927), and INST (F1: 0.889).
-    - Challenges: Some categories like BIO (F1: 0.333) and TIME (F1: 0.291) posed challenges for the model.
-    - Language Filter Impact: The language filtering with English subset did not negatively impact the model's performance, showcasing its adaptability across languages. This is probably due to the BERT model that has been previously trained on multiple languages. 
+System B outperformed A with an F1 score of 0.966, showing consistency across categories, especially in LOC and PER. Its multilingual training proved advantageous, potentially due to the larger dataset.
 
-System B 
-
-- Overall Performance: This model achieved a strong overall F1 score of 0.966 on the test dataset, surpassing System A in overall performance.
-- Category-wise Analysis:
-    - Consistency: The model demonstrated consistency across categories, with high F1 scores for ANIM, DIS, LOC, ORG, and PER.
-    - High Performers: Notable performance in categories like LOC (F1: 0.983) and PER (F1: 0.983).
-    - Multilingual Advantage: Training on a multilingual dataset proved beneficial, but could be due to the larger dataset.
-
-General Comments:
-- Data Size Impact: System B, trained on a larger multilingual dataset, outperformed System A in most categories.
-- Category-specific Challenges: Some categories consistently posed challenges in both systems, indicating potential areas for further improvement, such as BIO and TIME.
-- Label Normalization: There are indications of label normalization or spreading that may benefit from further investigation and refinement.
-- Error Analysis: In-depth error analysis on misclassified instances can provide insights into specific challenges and guide targeted improvements.
+Both systems highlighted challenges in categories like BIO and TIME, indicating room for improvement. 
+In-depth error analysis can provide insights for targeted enhancements. 
+The impact of data size was evident, with System B's larger multilingual dataset contributing to its superior performance.

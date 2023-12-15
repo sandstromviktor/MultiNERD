@@ -1,0 +1,41 @@
+{   "metadata": "5 Categories, all languages",
+    "epoch": 1.0,
+    "test_ANIM": {
+        "f1": 0.8010992540775903,
+        "number": 28346,
+        "precision": 0.8105590062111802,
+        "recall": 0.7918577577083187
+    },
+    "test_DIS": {
+        "f1": 0.9641128943968821,
+        "number": 138188,
+        "precision": 0.9724524801601908,
+        "recall": 0.9559151301126002
+    },
+    "test_LOC": {
+        "f1": 0.9831107134237156,
+        "number": 169616,
+        "precision": 0.9816371395318764,
+        "recall": 0.9845887180454674
+    },
+    "test_ORG": {
+        "f1": 0.9525455504130295,
+        "number": 33982,
+        "precision": 0.9482125153088004,
+        "recall": 0.9569183685480549
+    },
+    "test_PER": {
+        "f1": 0.9828258211686319,
+        "number": 121334,
+        "precision": 0.9785301133949871,
+        "recall": 0.9871594112120263
+    },
+    "test_loss": 0.001181436120532453,
+    "test_overall_accuracy": 0.9936818390886843,
+    "test_overall_f1": 0.9656538484361269,
+    "test_overall_precision": 0.9639677757844498,
+    "test_overall_recall": 0.9673458296299232,
+    "test_runtime": 528.5122,
+    "test_samples_per_second": 837.195,
+    "test_steps_per_second": 6.541
+}

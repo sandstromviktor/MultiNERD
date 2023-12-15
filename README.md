@@ -121,7 +121,7 @@ Evaluation of the model is done automatically in the training script every 1000 
 This calculates Compute micro-F1, recall, precision and accuracy.
 Let $M$ be the confusion matrix, then we define
 $$F_{1, micro} = \frac{\sum_{i=1}^{n} M_{i,i}}{\sum_{i=1}^{n} M_{i,i} + \frac{1}{2}\left[\sum_{i=1}^{n} \sum_{j=1, j\neq j}^{n}  M_{i,j} + \sum_{i=1}^{n} \sum_{j=1, j\neq j}^{n}  M_{j,i} \right]}$$
-This expression looks complicated, but is basically the sum of all true positives (TP) divided by the sum of all TP plus half of the sum of all false positives (FP) plus the sum of all false negatives. 
+This expression looks complicated (and rendered incorrectly on Github), but is basically the sum of all true positives (TP) divided by the sum of all TP plus half of the sum of all false positives (FP) plus the sum of all false negatives. 
 
 ## Experiments
 Two experiments were conducted, each using the `bert-based-multilingual-cased` model ([Link](https://huggingface.co/bert-base-multilingual-cased)). Each model were trained for 1 epoch, using all default hyperparameters (see `train.py` for exact values) before tested on the `test-dataset`. 
@@ -136,24 +136,34 @@ python3 main.py --filter-language english --model-name bert-based-multilingual-c
 
 | Category            | F1                   | Precision            | Recall               | Number   |
 |------------------|-------------------|-------------------|-------------------|----------|
-| ANIM           | 0.753   | 0.699   | 0.815   | 1852     |
-| BIO            | 0.667   | 0.6     | 0.75    | 16       |
-| CEL            | 0.982   | 0.983   | 0.980   | 6618     |
-| DIS            | 0.969   | 0.969   | 0.969   | 916      |
-| EVE            | 0.870   | 0.909   | 0.833   | 24       |
-| FOOD           | 0.993   | 0.994   | 0.992   | 602916   |
-| INST           | 0.998   | 0.998   | 0.998   | 11460    |
-| LOC            | 0.764   | 0.733   | 0.799   | 3208     |
-| MEDIA          | 0.771   | 0.773   | 0.771   | 1518     |
-| MYTH           | 0.634   | 0.686   | 0.589   | 1144     |
-| ORG            | 0.738   | 0.746   | 0.731   | 1004     |
-| PER            | 0.995   | 0.994   | 0.996   | 24046    |
-| PLANT          | 0.982   | 0.975   | 0.989   | 544      |
-| TIME           | 0.596   | 0.627   | 0.568   | 366      |
-| VEHI           | 0.966   | 0.958   | 0.974   | 704      |
-| All            | 0.989   | 0.990   | 0.989   | 656336   |
+| ANIM           | 0.598   | 0.816   | 0.472   | 32390   |
+| BIO            | 0.333   | 0.592   | 0.232   | 250   |
+| CEL            | 0.849   | 0.801   | 0.902   | 33900   |
+| DIS            | 0.563   | 0.807   | 0.433   | 30676   |
+| EVE            | 0.463   | 0.695   | 0.347   | 1406   |
+| FOOD           | 0.949   | 0.948   | 0.950   | 6373068   |
+| INST           | 0.889   | 0.865   | 0.914   | 145830   |
+| LOC            | 0.471   | 0.503   | 0.444   | 28342   |
+| MEDIA          | 0.590   | 0.592   | 0.589   | 11838   |
+| MYTH           | 0.381   | 0.413   | 0.353   | 11032   |
+| ORG            | 0.493   | 0.470   | 0.519   | 5994   |
+| PER            | 0.927   | 0.909   | 0.945   | 169556   |
+| PLANT          | 0.807   | 0.747   | 0.878   | 6484   |
+| TIME           | 0.291   | 0.437   | 0.218   | 4106   |
+| VEHI           | 0.693   | 0.754   | 0.641   | 11472   |
+| All            | 0.940   | 0.940   |  0.939  | 6866344   |
 
 ## System B
 ```bash
 python3 main.py --categories PER ORG LOC DIS ANIM --model-name bert-base-multilingual-cased
 ```
+
+| Category            | F1                   | Precision            | Recall               | Number   |
+|------------------|-------------------|-------------------|-------------------|----------|
+| ANIM           | 0.801   | 0.811   | 0.792   | 28346     |
+| DIS            | 0.964   | 0.972   | 0.956   | 138188      |
+| LOC            | 0.983   | 0.982   | 0.985   | 169616     |
+| ORG            | 0.953   | 0.948   | 0.957   | 33982     |
+| PER            | 0.983   | 0.979   | 0.987   | 121334    |
+| All            | 0.966   | 0.964   | 0.967   | 491466   |
+

@@ -119,7 +119,9 @@ $$F_{1, micro} = \frac{\sum_{i=1}^{n} M_{i,i}}{\sum_{i=1}^{n} M_{i,i} + \frac{1}
 This expression looks complicated, but is basically the sum of all true positives (TP) divided by the sum of all TP plus half of the sum of all false positives (FP) plus the sum of all false negatives. 
 
 ## Experiments
-Two experiments were conducted, each using the `bert-based-multilingual-cased` model ([Link](https://huggingface.co/bert-base-multilingual-cased)). Each model was trained for 1 epoch, using all default hyperparameters (see `train.py` for exact values) before tested on the `test-dataset`. 
+Two experiments were conducted, each using the `bert-based-multilingual-cased` model ([Link](https://huggingface.co/bert-base-multilingual-cased)). Each model were trained for 1 epoch, using all default hyperparameters (see `train.py` for exact values) before tested on the `test-dataset`. 
+
+Models were trained on 1 NVIDIA A-100 GPU (At NSC Berzelius)
 
 ### System A
 
@@ -148,5 +150,5 @@ python3 main.py --filter-language english --model-name bert-based-multilingual-c
 
 ## System B
 ```bash
-python3 main.py --categories PER ORG LOC DIS ANIM --model-name bert-based-multilingual-cased
+python3 main.py --categories PER ORG LOC DIS ANIM --model-name bert-base-multilingual-cased
 ```

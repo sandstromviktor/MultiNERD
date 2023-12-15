@@ -31,7 +31,8 @@ def get_model(model_name: str, categories: list = None) -> SpanMarkerModel:
         )
 
     if categories:
-        labels = get_filtered_tags(categories).union({"O"})
+        labels = get_filtered_tags(categories)
+        logging.info(f"Setting labels as {labels}")
     else:
         labels = get_all_tags()
 
@@ -76,23 +77,25 @@ def train(args):
         model = model.to("cuda")
 
     if args.categories:
+        logging.info(f"Categories settings is being used")
         dataset = get_category_filtered_dataset(args.categories)
 
     if args.language_filter:
+        logging.info(f"Language filter is being used")
         dataset = get_single_languange_dataset(args.language_filter)
 
     trainer = Trainer(
         model=model,
         args=train_args,
-        train_dataset=dataset["train"],
-        eval_dataset=dataset["validation"],
+        train_dataset=dataset["train"].select(range(100)),
+        eval_dataset=dataset["validation"].select(range(100)),
     )
 
     trainer.train()
 
     trainer.save_model(f"models/{args.model_name}/checkpoint-final")
 
-    test_dataset = dataset["test"]
+    test_dataset = dataset["test"].select(range(100))
     # Compute & save the metrics on the test set
     metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
     trainer.save_metrics("test", metrics)

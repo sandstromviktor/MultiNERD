@@ -96,10 +96,9 @@ pip install -r requirements.txt
 Or if you want to run a (Docker) container (May not work on GPU)
 ```bash
 docker build -t multinerd -
-docker run --rm -it -v $PWD/models:/home/code/models multinerd <COMMAND HERE>
+docker run --rm -it -v $PWD/models:/home/code/models multinerd bash
 ```
-
-replace `<COMMAND HERE>` with any command you find in the readme below. 
+This opens a shell to the container where you can run the same commands (see below) as you would in your venv.
 The `-v` flag mounts the models folder to the repo folder so that your trained models are persistent on your drive.
 ## Training
 The training script preprocesses the data and then uses the 🤗 `Trainer` to fine-tune the model.

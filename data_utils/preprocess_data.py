@@ -78,7 +78,7 @@ def get_category_filtered_dataset(categories: list) -> DatasetDict:
     dataset = get_raw_dataset()
     logging.info(f"Fetching category filtered dataset using categories: {categories}")
     tags = get_filtered_tags(categories)
-    
+
     mapped_tags = set([TAG_MAP[tag] for tag in tags])
 
     return dataset.map(
@@ -126,16 +126,16 @@ def preprocess_ner_tags(row: dict, mapped_tags: set) -> dict:
 
 
 def get_filtered_tags(categories: list) -> list:
-    tags =  [
-            key
-            for key, value in TAG_MAP.items()
-            if any(substring in key for substring in categories)
-        ]
-    
+    tags = [
+        key
+        for key, value in TAG_MAP.items()
+        if any(substring in key for substring in categories)
+    ]
+
     if "O" not in tags:
         tags = ["O"] + tags
     return tags
-    
+
 
 def get_all_tags() -> list:
     return list(TAG_MAP.keys())

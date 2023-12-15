@@ -11,7 +11,7 @@ from data_utils.preprocess_data import (
     get_all_tags,
     get_single_languange_dataset,
     get_category_filtered_dataset,
-    get_raw_dataset
+    get_raw_dataset,
 )
 
 
@@ -84,7 +84,7 @@ def train(args):
     if args.language_filter:
         logging.info(f"Language filter is being used")
         dataset = get_single_languange_dataset(args.language_filter)
-        
+
         # Testing with all languages
         test_dataset = get_raw_dataset()["test"]
 

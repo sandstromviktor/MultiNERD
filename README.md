@@ -12,6 +12,14 @@ The goal is to develop two models that can identify and classify entities on
 
 
 ## How to use
+### Example Usage:
+```bash
+python main.py --learning-rate 1e-4 --batch-size 64 --epochs 5 --model-name bert-base-uncased --language-filter en
+```
+### Example Usage on 4 GPUs (1 node) using torchrun:
+```bash
+torchrun --nproc_per_node 4 main.py --gpu --learning-rate 5e-5 --model-name roberta-large --categories PER ORG
+```
 
 ### Command-Line Arguments
 
@@ -69,10 +77,7 @@ The goal is to develop two models that can identify and classify entities on
      python main.py --categories PERSON ORG LOC
      ```
 NOTE: You can not use `--language-filter` together with `--categories`
-### Example Usage:
-```bash
-python main.py --learning-rate 1e-4 --batch-size 64 --epochs 5 --model-name "bert-base-uncased" --language-filter en
-```
+
 
 ## How to setup
 

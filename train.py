@@ -11,6 +11,7 @@ from data_utils.preprocess_data import (
     get_all_tags,
     get_single_languange_dataset,
     get_category_filtered_dataset,
+    get_raw_dataset
 )
 
 
@@ -78,10 +79,14 @@ def train(args):
     if args.categories:
         logging.info(f"Categories settings is being used")
         dataset = get_category_filtered_dataset(args.categories)
+        test_dataset = dataset["test"]
 
     if args.language_filter:
         logging.info(f"Language filter is being used")
         dataset = get_single_languange_dataset(args.language_filter)
+        
+        # Testing with all languages
+        test_dataset = get_raw_dataset()["test"]
 
     trainer = Trainer(
         model=model,
@@ -94,7 +99,6 @@ def train(args):
 
     trainer.save_model(f"models/{args.model_name}/checkpoint-final")
 
-    test_dataset = dataset["test"]
     # Compute & save the metrics on the test set
     metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
     trainer.save_metrics("test", metrics)

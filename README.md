@@ -86,15 +86,23 @@ NOTE: You can not use `--language-filter` together with `--categories`
 git clone https://github.com/sandstromviktor/MultiNERD.git
 cd multinerd-nerd
 ```
-2. Set Up Environment
+2.  Set Up Environment (Linux)
 ```bash
 python3 -m venv venv
+source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Or if you want to run a (Docker) container (May not work on GPU)
+```bash
+docker build -t multinerd -
+docker run --rm -it -v $PWD/models:/home/code/models multinerd <COMMAND HERE>
+```
+
+replace `<COMMAND HERE>` with any command you find in the readme below. 
+The `-v` flag mounts the models folder to the repo folder so that your trained models are persistent on your drive.
 ## Training
 The training script preprocesses the data and then uses the 🤗 `Trainer` to fine-tune the model.
-
 
 ### Fine-tune System A
 System A is a language model that is trained to classify all entity types, but for only the english subset of the data. 

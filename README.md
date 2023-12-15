@@ -95,7 +95,7 @@ pip install -r requirements.txt
 
 Or if you want to run a (Docker) container (May not work on GPU)
 ```bash
-docker build -t multinerd -
+docker build -t multinerd .
 docker run --rm -it -v $PWD/models:/home/code/models multinerd bash
 ```
 This opens a shell to the container where you can run the same commands (see below) as you would in your venv.

@@ -167,3 +167,26 @@ python3 main.py --categories PER ORG LOC DIS ANIM --model-name bert-base-multili
 | PER            | 0.983   | 0.979   | 0.987   | 121334    |
 | All            | 0.966   | 0.964   | 0.967   | 491466   |
 
+## Summary
+
+System A 
+
+- Overall Performance: The model achieved an overall F1 score of 0.940 on the test dataset.
+- Category-wise Analysis:
+    - High Performers: The model excelled in categories such as FOOD (F1: 0.949), PER (F1: 0.927), and INST (F1: 0.889).
+    - Challenges: Some categories like BIO (F1: 0.333) and TIME (F1: 0.291) posed challenges for the model.
+    - Language Filter Impact: The language filtering with English subset did not negatively impact the model's performance, showcasing its adaptability across languages. This is probably due to the BERT model that has been previously trained on multiple languages. 
+
+System B 
+
+- Overall Performance: This model achieved a strong overall F1 score of 0.966 on the test dataset, surpassing System A in overall performance.
+- Category-wise Analysis:
+    - Consistency: The model demonstrated consistency across categories, with high F1 scores for ANIM, DIS, LOC, ORG, and PER.
+    - High Performers: Notable performance in categories like LOC (F1: 0.983) and PER (F1: 0.983).
+    - Multilingual Advantage: Training on a multilingual dataset proved beneficial, but could be due to the larger dataset.
+
+General Comments:
+- Data Size Impact: System B, trained on a larger multilingual dataset, outperformed System A in most categories.
+- Category-specific Challenges: Some categories consistently posed challenges in both systems, indicating potential areas for further improvement, such as BIO and TIME.
+- Label Normalization: There are indications of label normalization or spreading that may benefit from further investigation and refinement.
+- Error Analysis: In-depth error analysis on misclassified instances can provide insights into specific challenges and guide targeted improvements.
